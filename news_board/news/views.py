@@ -35,6 +35,19 @@ class PostDetailView(APIView):
         except Post.DoesNotExist:
             raise Http404
 
+    def put(self, request, pk):
+        try:
+            post = Post.objects.get(pk=pk)
+            serializer = PostSerializer(post, data=request.data)
+
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except Post.DoesNotExist:
+            raise Http404
+
 
 class CommentView(APIView):
 
@@ -60,6 +73,19 @@ class CommentDetailView(APIView):
             comment = Comment.objects.get(pk=pk)
             serializer = CommentSerializer(comment)
             return Response(serializer.data)
+
+        except Comment.DoesNotExist:
+            raise Http404
+
+    def put(self, request, pk):
+        try:
+            comment = Comment.objects.get(pk=pk)
+            serializer = CommentSerializer(comment, data=request.data)
+
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         except Comment.DoesNotExist:
             raise Http404
