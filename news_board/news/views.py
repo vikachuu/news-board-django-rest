@@ -8,6 +8,9 @@ from .serializers import PostSerializer, CommentSerializer
 
 
 class PostView(APIView):
+    """Methods for /posts/ endpoint: create and get all.
+    """
+
     def get(self, request):
         posts = Post.objects.all()
         serializer = PostSerializer(posts, many=True)
@@ -43,6 +46,9 @@ class PostUpvote(APIView):
 
 
 class PostDetailView(APIView):
+    """Methods for /posts/<:id>/ endpoint: get, put, delete.
+    """
+
     def get(self, request, pk):
         try:
             post = Post.objects.get(pk=pk)
@@ -76,6 +82,9 @@ class PostDetailView(APIView):
 
 
 class CommentView(APIView):
+    """Methods for /comments/ endpoint: create and get all.
+    """
+
     def get(self, request):
         comments = Comment.objects.all()
         serializer = CommentSerializer(comments, many=True)
@@ -92,6 +101,9 @@ class CommentView(APIView):
 
 
 class CommentDetailView(APIView):
+    """Methods for /posts/<:id>/ endpoint: get, put, delete.
+    """
+
     def get(self, request, pk):
         try:
             comment = Comment.objects.get(pk=pk)
