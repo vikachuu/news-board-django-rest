@@ -48,6 +48,15 @@ class PostDetailView(APIView):
         except Post.DoesNotExist:
             raise Http404
 
+    def delete(self, request, pk):
+        try:
+            post = Post.objects.get(pk=pk)
+            post.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        except Post.DoesNotExist:
+            raise Http404
+
 
 class CommentView(APIView):
 
@@ -86,6 +95,15 @@ class CommentDetailView(APIView):
                 serializer.save()
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except Comment.DoesNotExist:
+            raise Http404
+
+    def delete(self, request, pk):
+        try:
+            comment = Comment.objects.get(pk=pk)
+            comment.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
 
         except Comment.DoesNotExist:
             raise Http404
