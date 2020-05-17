@@ -5,10 +5,8 @@ services:
   db:
     image: postgres
     container_name: db
-    environment:
-      - POSTGRES_DB=news_board_db
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+    env_file:
+      - ./env/db.env
     ports: 
       - "8001:5432"
 
@@ -17,7 +15,7 @@ services:
     volumes:
       - ./news_board/:/usr/src/app/
     env_file:
-      - ./.env
+      - ./env/.env
     links:
       - db:db
     depends_on: 
