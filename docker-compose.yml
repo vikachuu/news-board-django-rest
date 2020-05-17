@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+
+  db:
+    image: postgres
+    container_name: db
+    environment:
+      - POSTGRES_DB=news_board_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports: 
+      - "8001:5432"
+
+  web:
+    build: ./news_board
+    volumes:
+      - ./news_board/:/usr/src/app/
+    env_file:
+      - ./.env
+    links:
+      - db:db
+    depends_on: 
+      - db
+    ports:
+      - 8000:8000
+    command: python manage.py runserver 0.0.0.0:8000
