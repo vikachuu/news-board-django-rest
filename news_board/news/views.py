@@ -24,6 +24,25 @@ class PostView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class PostUpvote(APIView):
+     """Endpoint to upvote post (+1). Use POST method to follow the idempotence REST rule.
+     """
+
+     def post(self, request, pk):
+        try:
+            post = Post.objects.get(pk=pk)
+            update_data = {'upvotes_amount': post.upvotes_amount + 1}
+
+            serializer = PostSerializer(post, data=update_data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except Post.DoesNotExist:
+            raise Http404
+
+
 class PostDetailView(APIView):
 
     def get(self, request, pk):
