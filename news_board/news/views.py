@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from django.http import Http404
 
 from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
@@ -23,6 +24,18 @@ class PostView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class PostDetailView(APIView):
+
+    def get(self, request, pk):
+        try:
+            post = Post.objects.get(pk=pk)
+            serializer = PostSerializer(post)
+            return Response(serializer.data)
+
+        except Post.DoesNotExist:
+            raise Http404
+
+
 class CommentView(APIView):
 
     def get(self, request):
@@ -33,9 +46,20 @@ class CommentView(APIView):
 
     def post(self, request):
         serializer = CommentSerializer(data=request.data)
-        print(request.data)
 
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CommentDetailView(APIView):
+
+    def get(self, request, pk):
+        try:
+            comment = Comment.objects.get(pk=pk)
+            serializer = CommentSerializer(comment)
+            return Response(serializer.data)
+
+        except Comment.DoesNotExist:
+            raise Http404
