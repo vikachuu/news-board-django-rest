@@ -10,6 +10,7 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    post_id = serializers.IntegerField()
 
     class Meta:
         model = Comment
