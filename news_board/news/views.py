@@ -30,10 +30,10 @@ class PostUpvote(APIView):
     """Endpoint to upvote post (+1). Use POST method to follow the idempotence REST rule.
     """
 
-    def post(self, request, pk):
+    def post(self, request, pk: int):
         try:
             post = Post.objects.get(pk=pk)
-            update_data = {"upvotes_amount": post.upvotes_amount + 1}
+            update_data: dict = {"upvotes_amount": post.upvotes_amount + 1}
 
             serializer = PostSerializer(post, data=update_data, partial=True)
             if serializer.is_valid():
@@ -49,7 +49,7 @@ class PostDetailView(APIView):
     """Methods for /posts/<:id>/ endpoint: get, put, delete.
     """
 
-    def get(self, request, pk):
+    def get(self, request, pk: int):
         try:
             post = Post.objects.get(pk=pk)
             serializer = PostSerializer(post)
@@ -58,7 +58,7 @@ class PostDetailView(APIView):
         except Post.DoesNotExist:
             raise Http404
 
-    def put(self, request, pk):
+    def put(self, request, pk: int):
         try:
             post = Post.objects.get(pk=pk)
             serializer = PostSerializer(post, data=request.data)
@@ -71,7 +71,7 @@ class PostDetailView(APIView):
         except Post.DoesNotExist:
             raise Http404
 
-    def delete(self, request, pk):
+    def delete(self, request, pk: int):
         try:
             post = Post.objects.get(pk=pk)
             post.delete()
@@ -104,7 +104,7 @@ class CommentDetailView(APIView):
     """Methods for /posts/<:id>/ endpoint: get, put, delete.
     """
 
-    def get(self, request, pk):
+    def get(self, request, pk: int):
         try:
             comment = Comment.objects.get(pk=pk)
             serializer = CommentSerializer(comment)
@@ -113,7 +113,7 @@ class CommentDetailView(APIView):
         except Comment.DoesNotExist:
             raise Http404
 
-    def put(self, request, pk):
+    def put(self, request, pk: int):
         try:
             comment = Comment.objects.get(pk=pk)
             serializer = CommentSerializer(comment, data=request.data)
@@ -126,7 +126,7 @@ class CommentDetailView(APIView):
         except Comment.DoesNotExist:
             raise Http404
 
-    def delete(self, request, pk):
+    def delete(self, request, pk: int):
         try:
             comment = Comment.objects.get(pk=pk)
             comment.delete()
