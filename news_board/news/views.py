@@ -25,7 +25,7 @@ class PostView(APIView):
 
 class PostUpvote(APIView):
     """Endpoint to upvote post (+1). Use POST method to follow the idempotence REST rule.
-     """
+    """
 
     def post(self, request, pk):
         try:
