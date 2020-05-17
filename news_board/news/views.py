@@ -8,7 +8,6 @@ from .serializers import PostSerializer, CommentSerializer
 
 
 class PostView(APIView):
-
     def get(self, request):
         posts = Post.objects.all()
         serializer = PostSerializer(posts, many=True)
@@ -25,13 +24,13 @@ class PostView(APIView):
 
 
 class PostUpvote(APIView):
-     """Endpoint to upvote post (+1). Use POST method to follow the idempotence REST rule.
+    """Endpoint to upvote post (+1). Use POST method to follow the idempotence REST rule.
      """
 
-     def post(self, request, pk):
+    def post(self, request, pk):
         try:
             post = Post.objects.get(pk=pk)
-            update_data = {'upvotes_amount': post.upvotes_amount + 1}
+            update_data = {"upvotes_amount": post.upvotes_amount + 1}
 
             serializer = PostSerializer(post, data=update_data, partial=True)
             if serializer.is_valid():
@@ -44,7 +43,6 @@ class PostUpvote(APIView):
 
 
 class PostDetailView(APIView):
-
     def get(self, request, pk):
         try:
             post = Post.objects.get(pk=pk)
@@ -78,7 +76,6 @@ class PostDetailView(APIView):
 
 
 class CommentView(APIView):
-
     def get(self, request):
         comments = Comment.objects.all()
         serializer = CommentSerializer(comments, many=True)
@@ -95,7 +92,6 @@ class CommentView(APIView):
 
 
 class CommentDetailView(APIView):
-
     def get(self, request, pk):
         try:
             comment = Comment.objects.get(pk=pk)
