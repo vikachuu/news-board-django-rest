@@ -25,11 +25,6 @@ PORT=<db_port>  # 5432 for postgresql
 pip install -r requirements.txt
 ```
 
-### Go inside project folder
-```
-cd news_board
-```
-
 ### Database migrations  
 Make sure database with the name you wrote in the `.env` file exists. Then run migrations:
 ```
@@ -72,7 +67,11 @@ docker-compose down -v
 ```
 
 ## Run deployed on Heroku application  
-Follow the link: [news-board-django-rest](http:://).
+Deployed API base URL:
+```
+https://news-board-django-rest.herokuapp.com
+```
+Or follow the link for `/api/posts/`: [news-board-django-rest](https://news-board-django-rest.herokuapp.com/api/posts/).
 
 ## Postman collection
 
