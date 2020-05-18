@@ -80,3 +80,11 @@ Copy the link to Postman collection
 https://www.getpostman.com/collections/857dec584ad3a64b5d3a
 ``` 
 Don't forget to add `{{base_url}}` variable to the environment.
+
+## Reset post upvotes count recurring job
+
+[`reset_posts_upvotes`](https://github.com/vikachuu/news-board-django-rest/blob/master/news/management/commands/reset_posts_upvotes.py) is a custom management command to reset posts upvotes number.
+```
+python manage.py reset_posts_upvotes
+```
+To run it once a day it should be added to the crontab.
