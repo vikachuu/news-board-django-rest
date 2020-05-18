@@ -11,9 +11,9 @@ services:
       - "8001:5432"
 
   web:
-    build: ./news_board
+    build: .
     volumes:
-      - ./news_board/:/usr/src/app/
+      - .:/usr/src/app/
     env_file:
       - ./env/.env
     links:
